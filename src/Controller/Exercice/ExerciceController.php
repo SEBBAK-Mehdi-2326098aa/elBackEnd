@@ -60,7 +60,6 @@ class ExerciceController extends AbstractController
     {
         $exercice = $this->exerciceRepository->find($id);
 
-        dump($exercice);
         if (!$exercice) {
             throw new NotFoundHttpException("Exercice not found");
         }
