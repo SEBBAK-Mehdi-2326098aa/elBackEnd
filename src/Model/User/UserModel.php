@@ -13,7 +13,7 @@ class UserModel
     /**
      * @var ?int
      */
-    public ?int $id;  // Ce type permet d'accepter null ou int
+    public ?int $id;
     /**
      * @var ?string
      */
