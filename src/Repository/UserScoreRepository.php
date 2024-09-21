@@ -15,6 +15,18 @@ class UserScoreRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, UserScore::class);
     }
+        public function addExerciceCompleted(int $idQuestion, int $idUser): array
+        {
+            return $this->createQueryBuilder('u')
+                ->innerJoin('u.question', 'e')
+                ->innerJoin('u.user', 'us')
+                ->set('u.exerciceCompleted', true)
+                ->set('u.id_question', $idQuestion)
+                ->set('u.id_user', $idUser)
+                ->getQuery()
+                ->getResult();
+
+        }
 
     //    /**
     //     * @return UserScore[] Returns an array of UserScore objects

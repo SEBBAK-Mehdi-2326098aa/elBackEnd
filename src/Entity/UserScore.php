@@ -20,25 +20,25 @@ class UserScore
     /**
      * @var Collection<int, exercice>
      */
-    #[ORM\ManyToMany(targetEntity: exercice::class)]
-    private Collection $id_question;
+    #[ORM\ManyToOne(targetEntity: exercice::class)]
+    private Collection $question;
 
     /**
      * @var Collection<int, user>
      */
-    #[ORM\ManyToMany(targetEntity: user::class)]
-    private Collection $id_user;
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    private Collection $user;
 
     #[ORM\Column(nullable: true)]
     private ?int $score = null;
 
     #[ORM\Column]
-    private ?bool $exerciceCompleted = null;
+    private ?bool $exerciceCompleted = false;
 
     public function __construct()
     {
-        $this->id_question = new ArrayCollection();
-        $this->id_user = new ArrayCollection();
+        $this->question = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,23 +49,23 @@ class UserScore
     /**
      * @return Collection<int, exercice>
      */
-    public function getIdQuestion(): Collection
+    public function getQuestion(): Collection
     {
-        return $this->id_question;
+        return $this->question;
     }
 
-    public function addIdQuestion(exercice $idQuestion): static
+    public function addQuestion(exercice $Question): static
     {
-        if (!$this->id_question->contains($idQuestion)) {
-            $this->id_question->add($idQuestion);
+        if (!$this->question->contains($Question)) {
+            $this->question->add($Question);
         }
 
         return $this;
     }
 
-    public function removeIdQuestion(exercice $idQuestion): static
+    public function removeQuestion(exercice $Question): static
     {
-        $this->id_question->removeElement($idQuestion);
+        $this->question->removeElement($Question);
 
         return $this;
     }
@@ -73,23 +73,23 @@ class UserScore
     /**
      * @return Collection<int, user>
      */
-    public function getIdUser(): Collection
+    public function getUser(): Collection
     {
-        return $this->id_user;
+        return $this->user;
     }
 
-    public function addIdUser(user $idUser): static
+    public function addUser(user $User): static
     {
-        if (!$this->id_user->contains($idUser)) {
-            $this->id_user->add($idUser);
+        if (!$this->user->contains($User)) {
+            $this->user->add($User);
         }
 
         return $this;
     }
 
-    public function removeIdUser(user $idUser): static
+    public function removeUser(user $User): static
     {
-        $this->id_user->removeElement($idUser);
+        $this->user->removeElement($User);
 
         return $this;
     }

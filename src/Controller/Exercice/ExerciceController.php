@@ -7,26 +7,30 @@ use App\Model\Exercice\ListExerciceModel;
 use App\Model\User\UserModel;
 use App\Repository\ExerciceRepository;
 use App\Repository\UserRepository;
+use App\Repository\UserScoreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExerciceController extends AbstractController
 {
     private ExerciceRepository $exerciceRepository;
-    private ExerciceModel $exerciceModel;
 
-    private ListExerciceModel $listExerciceModel;
+    private UserScoreRepository $userScoreRepository;
+    private ExerciceModel $exerciceModel;
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         ExerciceRepository         $exerciceRepository,
+        UserScoreRepository        $userScoreRepository,
         ExerciceModel              $exerciceModel,
         EntityManagerInterface $entityManager
     )
     {
         $this->exerciceRepository = $exerciceRepository;
+        $this->userScoreRepository = $userScoreRepository;
         $this->exerciceModel = $exerciceModel;
         $this->entityManager = $entityManager;
     }
@@ -68,16 +72,30 @@ class ExerciceController extends AbstractController
 
         return $this->json($exerciceModel);
     }
-//    public function getUserById(int $id): JsonResponse
-//    {
-//        $user = $this->userRepository->find($id);
-//
-//        if (!$user) {
-//            throw new NotFoundHttpException("User not found");
-//        }
-//
-//        $userModel = new UserModel($user);
-//
-//        return $this->json($userModel);
-//    }
+
+    /**
+     * Check Answer Exercice
+     * @View()
+     * @Route("/api/exercice/{id}/check", name="api_check_exercice", methods={"POST"})
+     * @IsGranted("ROLE_USER", message="userAccessForbidden")
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkExercice(int $id, Request $request): JsonResponse
+
+    {
+
+        $this->userScoreRepository->addExerciceCompleted($id, 1);
+        $exercice = $this->exerciceRepository->find($id);
+        if (!$exercice) {
+            throw new NotFoundHttpException("Exercice not found");
+        }
+
+        $data = json_decode($request->getContent(), true);
+        $answer = $data['answer'] ?? null;
+        $isCorrect = $exercice->getCorrectAnswer() === $answer;
+
+        return new JsonResponse(['isCorrect' => $isCorrect]);
+    }
 }
