@@ -30,6 +30,12 @@ class Exercice
     #[ORM\Column(length: 50)]
     private ?string $third_answer = null;
 
+    #[ORM\Column(length: 25)]
+    private ?string $correct_answer = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $difficulty = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +97,30 @@ class Exercice
     public function setThirdAnswer(string $third_answer): static
     {
         $this->third_answer = $third_answer;
+
+        return $this;
+    }
+
+    public function getCorrectAnswer(): ?string
+    {
+        return $this->correct_answer;
+    }
+
+    public function setCorrectAnswer(string $correct_answer): static
+    {
+        $this->correct_answer = $correct_answer;
+
+        return $this;
+    }
+
+    public function getDifficulty(): ?string
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(string $difficulty): static
+    {
+        $this->difficulty = $difficulty;
 
         return $this;
     }
