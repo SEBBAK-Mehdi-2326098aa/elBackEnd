@@ -54,7 +54,7 @@ class ExerciceController extends AbstractController
     /**
      * Get 10 random Exercices
      * @View()
-     * @Route("/api/exercice/ten/random", name="api_get_random_exercices", methods={"GET"})
+     * @Route("/api/exercice/ten/random", name="api_get_random_exercices", methods={"POST"})
      * @IsGranted("ROLE_USER", message="userAccessForbidden")
      * @return JsonResponse
      */

@@ -33,4 +33,4 @@ api_check_exercice:
 api_get_random_exercices:
     path: /api/exercice/ten/random
     controller: App\Controller\Exercice\ExerciceController::getTenRandomExercices
-    methods: ['GET']
+    methods: ['POST']
