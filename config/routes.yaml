@@ -1,5 +1,36 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+
+# Route pour obtenir un utilisateur par son ID
+api_get_user:
+    path: /api/user/{id}
+    controller: App\Controller\User\UserController::getUserById
+    methods: ['GET']
+
+# Route pour créer un nouvel utilisateur
+create_user:
+    path: /api/user/create
+    controller: App\Controller\User\UserController::createUser
+    methods: ['POST']
+
+# Route pour obtenir tous les exercices
+api_get_exercices:
+    path: /api/exercice
+    controller: App\Controller\Exercice\ExerciceController::getExercices
+    methods: ['GET']
+
+# Route pour obtenir un exercice par son ID
+api_get_exercice_by_id:
+    path: /api/exercice/{id}
+    controller: App\Controller\Exercice\ExerciceController::getExerciceById
+    methods: ['GET']
+
+# Route pour vérifier si la réponse à un exercice est correcte
+api_check_exercice:
+    path: /api/exercice/{id}/check
+    controller: App\Controller\Exercice\ExerciceController::checkExercice
+    methods: ['POST']
+
+# Route pour obtenir 10 exercices aléatoires
+api_get_random_exercices:
+    path: /api/exercice/ten/random
+    controller: App\Controller\Exercice\ExerciceController::getTenRandomExercices
+    methods: ['GET']

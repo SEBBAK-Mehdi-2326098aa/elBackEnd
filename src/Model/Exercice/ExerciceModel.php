@@ -6,7 +6,7 @@ use App\Entity\Exercice;
 
 /**
  * Class ExerciceModel
- * @package App\Model\User
+ * @package App\Model\Exercice
  */
 class ExerciceModel
 {
@@ -41,6 +41,16 @@ class ExerciceModel
     private ?string $third_answer;
 
     /**
+     * @var ?string
+     */
+    private ?string $correct_answer;
+
+    /**
+     * @var ?string
+     */
+    private ?string $difficulty;
+
+    /**
      * Exercice constructor.
      * @param Exercice $exercice
      */
@@ -52,6 +62,8 @@ class ExerciceModel
         $this->first_answer = $exercice->getFirstAnswer() ?? null;
         $this->second_answer = $exercice->getSecondAnswer() ?? null;
         $this->third_answer = $exercice->getThirdAnswer() ?? null;
+        $this->correct_answer = $exercice->getCorrectAnswer() ?? null;
+        $this->difficulty = $exercice->getDifficulty() ?? null;
     }
 
     /**
@@ -100,5 +112,21 @@ class ExerciceModel
     public function getThirdAnswer(): ?string
     {
         return $this->third_answer;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getCorrectAnswer(): ?string
+    {
+        return $this->correct_answer;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getDifficulty(): ?string
+    {
+        return $this->difficulty;
     }
 }

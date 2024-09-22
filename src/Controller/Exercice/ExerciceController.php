@@ -52,6 +52,26 @@ class ExerciceController extends AbstractController
     }
 
     /**
+     * Get 10 random Exercices
+     * @View()
+     * @Route("/api/exercice/ten/random", name="api_get_random_exercices", methods={"GET"})
+     * @IsGranted("ROLE_USER", message="userAccessForbidden")
+     * @return JsonResponse
+     */
+    public function getTenRandomExercices(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $category = $data['category'] ?? null;
+        $difficulty = $data['difficulty'] ?? null;
+        $exercices = $this->exerciceRepository->findExercices($category, $difficulty);
+        shuffle($exercices);
+        $exercicesAleatoires = array_slice($exercices, 0, 10);
+
+        $listExerciceModel = new ListExerciceModel($exercicesAleatoires);
+        return $this->json($listExerciceModel);
+
+    }
+    /**
      * Get Exercice by Id
      * @View()
      * @Route("/api/exercice/{id}", name="api_get_exercices_by_id", methods={"GET"})
@@ -85,8 +105,6 @@ class ExerciceController extends AbstractController
     public function checkExercice(int $id, Request $request): JsonResponse
 
     {
-
-        $this->userScoreRepository->addExerciceCompleted($id, 1);
         $exercice = $this->exerciceRepository->find($id);
         if (!$exercice) {
             throw new NotFoundHttpException("Exercice not found");

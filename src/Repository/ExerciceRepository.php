@@ -16,6 +16,17 @@ class ExerciceRepository extends ServiceEntityRepository
         parent::__construct($registry, Exercice::class);
     }
 
+    public function findExercices(string $category, string $difficulty): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.category = :category')
+            ->andWhere('e.difficulty = :difficulty')
+            ->setParameter('category', $category)
+            ->setParameter('difficulty', $difficulty)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Exercice[] Returns an array of Exercice objects
     //     */

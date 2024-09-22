@@ -20,5 +20,16 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    # Explicitly allow autowiring for App\Entity\User
+    App\Entity\User:
+        autowire: true
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    # Explicitly allow autowiring for App\Entity\Exercice
+    App\Entity\Exercice:
+        autowire: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
