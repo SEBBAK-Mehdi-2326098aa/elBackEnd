@@ -108,4 +108,30 @@ class UserController extends AbstractController
 
         return $this->json($userModel);
     }
+
+    /**
+     * Check user credentials.
+     * @View()
+     * @Rest\Post("/api/user/check/login", name="api_login")*
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkCredentials(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+
+        $user = $this->userRepository->findOneBy(['email' => $email]);
+        if (!$user) {
+            return $this->json(['message' => 'Invalid Email'], 401);
+        }
+        if ($user->getPassword() !== $password) {
+            var_dump($password);
+            return $this->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        return $this->json($user);
+    }
 }

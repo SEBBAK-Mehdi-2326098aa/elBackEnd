@@ -1,3 +1,10 @@
+# route pour vérifier les informations de connexion
+
+api_login:
+    path: /api/user/check/login
+    controller: App\Controller\User\UserController::CheckCredentials
+    methods: ['POST']
+
 
 # Route pour obtenir un utilisateur par son ID
 api_get_user:
