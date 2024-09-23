@@ -116,7 +116,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function checkCredentials(Request $request)
+    public function checkCredentials(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -125,11 +125,11 @@ class UserController extends AbstractController
 
         $user = $this->userRepository->findOneBy(['email' => $email]);
         if (!$user) {
-            return $this->json(['message' => 'Invalid Email'], 401);
+            return $this->json(['message' => 'Invalid Email']);
         }
         if ($user->getPassword() !== $password) {
             var_dump($password);
-            return $this->json(['message' => 'Invalid credentials'], 401);
+            return $this->json(['message' => 'Invalid credentials']);
         }
 
         return $this->json($user);
