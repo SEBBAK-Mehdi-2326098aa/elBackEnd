@@ -40,17 +40,22 @@ class UserModel
     private ?string $civility;
 
     /**
+     *@var ?int
+     */
+    private ?int $level;
+    /**
      * User constructor.
      * @param User $user
      */
     public function __construct(User $user)
     {
-        $this->id = $user->getId() ?? null;  // Gérer l'assignation de null
+        $this->id = $user->getId() ?? null;
         $this->name = $user->getName() ?? null;
         $this->lastname = $user->getLastname() ?? null;
         $this->email = $user->getEmail() ?? null;
         $this->password = $user->getPassword() ?? null;
         $this->civility = $user->getCivility() ?? null;
+        $this->level = $user->getLevel() ?? null;
     }
 
     /**
@@ -100,4 +105,15 @@ class UserModel
     {
         return $this->civility;
     }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?int $level): void
+    {
+        $this->level = $level;
+    }
+
 }

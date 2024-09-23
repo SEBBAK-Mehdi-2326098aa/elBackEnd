@@ -128,7 +128,6 @@ class UserController extends AbstractController
             return $this->json(['message' => 'Invalid Email']);
         }
         if ($user->getPassword() !== $password) {
-            var_dump($password);
             return $this->json(['message' => 'Invalid credentials']);
         }
 
