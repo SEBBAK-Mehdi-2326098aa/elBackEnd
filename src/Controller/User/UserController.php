@@ -133,4 +133,31 @@ class UserController extends AbstractController
 
         return $this->json($user);
     }
+
+    /**
+     * Update User level by {id}.
+     * @View()
+     * @Rest\Put("/api/user/{id}/update/level", name="api_change_level")
+     * @IsGranted("ROLE_USER", message="userAccessForbidden")
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     */
+
+    public function updateUserLevel(int $id, Request $request): JsonResponse {
+        $user = $this->userRepository->find($id);
+        if (!$user) {
+            throw new NotFoundHttpException("User not found");
+        }
+        $data = json_decode($request->getContent(), true);
+        $level = $data['level'] ?? null;
+
+        if ($level <= $user->getLevel()) {
+            return $this->json(['message' => 'User level is higher']);
+        }
+        $user->setLevel($level);
+        $this->entityManager->flush();
+        $userModel = new UserModel($user);
+        return $this->json($userModel);
+    }
 }
